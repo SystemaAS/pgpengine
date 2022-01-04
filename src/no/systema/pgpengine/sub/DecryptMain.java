@@ -17,11 +17,10 @@ import name.neuhalfen.projects.crypto.bouncycastle.openpgp.keys.keyrings.Keyring
 
 public class DecryptMain {
 
-	private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(DecryptMain.class);
 	
 	//public void runDecryptMain() {
-	public void runDecryptMain(Path sourceFile, String targetDir, String publicKeyRing, String privateKeyRing, String secretKeyRingPass) {
-		  
+	public int runDecryptMain(Path sourceFile, String targetDir, String publicKeyRing, String privateKeyRing, String secretKeyRingPass) {
+		  int retval = 0;
 		  final File pubKeyRing = new File(publicKeyRing);
 	      final File secKeyRing = new File(privateKeyRing);
 	      final String secKeyRingPassword = secretKeyRingPass;
@@ -41,19 +40,20 @@ public class DecryptMain {
 	      */
 	      
 	      try {
+	    	System.out.println("input2: BEFORE BouncyGPG.registerProvider()" );
 	        BouncyGPG.registerProvider();
 	        long startTime = System.currentTimeMillis();
 	
 	        final int BUFFSIZE = 8 * 1024;
-	        LOGGER.trace("Using a write buffer of {} bytes\n", BUFFSIZE);
+	        System.out.println("input2: AFTER BouncyGPG.registerProvider()" );
 	
 	        final KeyringConfig keyringConfig = KeyringConfigs.withKeyRingsFromFiles(pubKeyRing,
 	            secKeyRing, KeyringConfigCallbacks.withPassword(secKeyRingPassword));
-	
+	        System.out.println("AA");
 	        try (
+	        		 
 	            final InputStream cipherTextStream = Files.newInputStream(sourceFile);
-	
-	            final OutputStream fileOutput = Files.newOutputStream(destFile);
+	        	final OutputStream fileOutput = Files.newOutputStream(destFile);
 	            final BufferedOutputStream bufferedOut = new BufferedOutputStream(fileOutput, BUFFSIZE);
 	
 	            final InputStream plaintextStream = BouncyGPG
@@ -61,16 +61,22 @@ public class DecryptMain {
 	                .withConfig(keyringConfig)
 	                .andValidateSomeoneSigned()
 	                .fromEncryptedInputStream(cipherTextStream)
+	                 
 	
-	        ) {
+	        )  
+	        {
 	          Streams.pipeAll(plaintextStream, bufferedOut);
 	          
 	        }
+	        System.out.println("BB");  
 	        long endTime = System.currentTimeMillis();
 	
-	        LOGGER.info(String.format("DeEncryption took %.2f s",  ((double) endTime - startTime) / 1000));
+	        System.out.println(String.format("DeEncryption took %.2f s",  ((double) endTime - startTime) / 1000));
 	      } catch (Exception e) {
-	        LOGGER.error("ERROR", e);
+	    	  System.out.println("ERROR " + e);
+	    	  return -1;
 	      }
+	      
+	      return retval;
     	}
 }

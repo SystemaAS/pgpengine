@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import no.systema.pgpengine.sub.DecryptMain;
 
 public class PgpDecompressor {
-	private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(PgpDecompressor.class);
 	/**
 	 * 
 	 * @param sourceDir
