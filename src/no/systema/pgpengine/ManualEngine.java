@@ -29,10 +29,12 @@ public class ManualEngine {
 
 			
 			//final String PUBLIC_KEY_RING = getPgpKey(ApplicationPropertiesUtil.getProperty("pgp.tulltaxa.cert.pubkey"));
-			final String PUBLIC_KEY_RING = "/Users/oscardelatorre/ttax/certs/TaricFildistribution.asc";
+			//final String PUBLIC_KEY_RING = "/Users/oscardelatorre/ttax/certs/TaricFildistribution.asc"; //must be in the classpath
+			final String PUBLIC_KEY_RING = "/Library/Tomcat/apache-tomcat-9.0.53/certstulltaxa/TaricFildistribution.asc";
 			
 			//final String PRIVATE_KEY_RING = getPgpKey(ApplicationPropertiesUtil.getProperty("pgp.tulltaxa.cert.privkey"));
-			final String PRIVATE_KEY_RING = "/Users/oscardelatorre/ttax/certs/TrondHyttan.asc";
+			//final String PRIVATE_KEY_RING = "/Users/oscardelatorre/ttax/certs/TrondHyttan.asc"; //must be in the classpath
+			final String PRIVATE_KEY_RING = "/Library/Tomcat/apache-tomcat-9.0.53/certstulltaxa/TrondHyttan.asc"; //must be in the classpath
 			
 			//final String SECRET_KEY_RING_PASS = ApplicationPropertiesUtil.getProperty("pgp.tulltaxa.cert.seckey");
 			final String SECRET_KEY_RING_PASS = "Hvem er Dennis";
